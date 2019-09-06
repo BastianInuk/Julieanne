@@ -6,8 +6,10 @@ final class UserController: RouteCollection {
     func boot(router: Router) throws {
         // Makes it so /api/users is the route in this controller.
         let usersRoute = router.grouped("api", "users")
-            usersRoute.get(use: getAllHandler)
+            
             usersRoute.get(User.parameter, use: getHandler)
+        
+            usersRoute.post(User.self, use: createHandler)
         
         /// Protected route, only for authenticated `User`s
         let basicAuthMiddleware = User.basicAuthMiddleware(using: BCryptDigest())
@@ -17,7 +19,8 @@ final class UserController: RouteCollection {
         let tokenAuthMiddleware = User.tokenAuthMiddleware()
         let guardAuthMiddleware = User.guardAuthMiddleware()
         let tokenAuthGroup = usersRoute.grouped(tokenAuthMiddleware, guardAuthMiddleware)
-            usersRoute.post(User.self, use: createHandler)
+        
+            tokenAuthGroup.get(use: getAllHandler)
     }
     
     func createHandler(_ req: Request, user: User) throws -> Future<User.Public> {
