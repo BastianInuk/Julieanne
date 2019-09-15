@@ -21,9 +21,7 @@ Based as much in Swift as possible, Julieanne is a small cog in a Community Proj
     - You can optionally continue with the rest of the steps, but it is not required
 4) Setup Docker
     - Open Terminal and run the following while INSIDE the project folder: 
-        - `docker run --name postgres -e POSTGRES_DB=vapor \
-        -e POSTGRES_USER=vapor -e POSTGRES_PASSWORD=password \
-        -p 5432:5432 -d postgres` (copy as one command)
+        - `docker-compose up -d`
         - If you receive an error with the above command, ensure you copied it as one command unedited, you have docker open and running (it is green and says Docker is Running in the top bar), and that you do not already have a container called postgres (you can check by running `docker ps`)
 5) Download and setup the repository
     - Download or cloan the project by clicking in the top right
